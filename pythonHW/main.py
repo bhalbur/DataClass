@@ -46,6 +46,15 @@ with open("budget_data.csv") as f:
     print(f"")
     print(f"")
 
+BudgetOutput = open("BudgetOutput.txt","w+")
+BudgetOutput.write(f"Budget Analysis\n")
+BudgetOutput.write(f"----------------------------------------\n")
+BudgetOutput.write(f"Total Months: {months}\n")
+BudgetOutput.write(f"Total Profit: ${profit}\n")
+BudgetOutput.write(f"Average Change: ${avchange}\n")
+BudgetOutput.write(f"Largest Change: {high_mon}:  (${high_chg})\n")
+BudgetOutput.write(f"Smallest Change: {low_mon}:  (${low_chg})\n")
+BudgetOutput.close()
 ##################################################################################
 
 candlist = []
@@ -66,13 +75,28 @@ with open("election_data.csv") as file:
         #if votecount >= 100000: break
 
     print(f"Election Results")
-    print(f"-----------------------------")
+    print(f"-------------------------------")
     print(f"total votes: {votecount}")
-    print(f"-----------------------------")
+    print(f"-------------------------------")
     for i in range(0,len(candlist)):
         print(f"{candlist[i]}:  {round(votelist[i]*100/votecount,3)}%   ({votelist[i]})")
     mostvotes = max(votelist)
     ind = votelist.index(mostvotes)
-    print(f"-----------------------------")
+    print(f"-------------------------------")
     print(f"Winner: {candlist[ind]} with {votelist[ind]} votes")
-    print(f"-----------------------------")
+    print(f"-------------------------------")
+
+
+    ElectOutput = open("ElectionOutput.txt","w+")
+    ElectOutput.write(f"Election Results\n")
+    ElectOutput.write(f"-------------------------------\n")
+    ElectOutput.write(f"total votes: {votecount}\n")
+    ElectOutput.write(f"-------------------------------\n")
+    for i in range(0, len(candlist)):
+        ElectOutput.write(f"{candlist[i]}:  {round(votelist[i]*100/votecount,3)}%   ({votelist[i]})\n")
+    mostvotes = max(votelist)
+    ind = votelist.index(mostvotes)
+    ElectOutput.write(f"-------------------------------\n")
+    ElectOutput.write(f"Winner: {candlist[ind]} with {votelist[ind]} votes\n")
+    ElectOutput.write(f"-------------------------------")
+    ElectOutput.close()
