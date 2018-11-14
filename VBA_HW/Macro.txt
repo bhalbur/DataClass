@@ -1,0 +1,48 @@
+Sub datascrub()
+
+
+''create loop for tabs here
+
+Dim firstrow, lastrow, rownum As Long
+firstrow = 2
+lastrow = ActiveSheet.UsedRange.Rows.Count + 1
+rownum = firstrow
+
+Dim printrow, printcol As Integer
+printrow = 1
+printcol = 9
+
+
+''First cycle through and create a list of unique values from Column A, the ticker symbols
+For rownum = firstrow To lastrow
+    If Cells(rownum, 1).Value = Cells(rownum - 1, 1).Value Then
+            Else
+                Cells(printrow, printcol).Value = Cells(rownum, 1).Value
+                printrow = printrow + 1
+        End If
+Next
+
+
+rownum = firstrow
+printrow = 1
+printcol = 10
+
+
+Dim volsum As Double
+volsum = 0
+
+''loop through each line in col A, if it matches the value in col "I" then add to the sum
+''at the end of each ticker, paste the sum in col K
+For rownum = firstrow To lastrow
+    If Cells(rownum, 1).Value = Cells(printrow, 9).Value Then
+        volsum = volsum + Cells(rownum, 7).Value
+            Else
+                Cells(printrow, printcol).Value = volsum
+                printrow = printrow + 1
+                volsum = Cells(rownum, 7).Value
+        End If
+Next
+
+
+
+End Sub
