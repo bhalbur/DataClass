@@ -34,21 +34,23 @@ with open("budget_data.csv") as f:
 
     avchange = round(totchange/(months-1), 2)
 
+    print(f"")
     print(f"Budget Analysis")
-    print(f"---------------------------")
+    print(f"----------------------------------------")
     print(f"Total Months: {months}")
     print(f"Total Profit: ${profit}")
-    print(f"Average Change: {avchange}")
-    print(f"Largest Change: {high_mon}: ${high_chg}")
-    print(f"Smallest Change: {low_mon}: ${low_chg}")
+    print(f"Average Change: ${avchange}")
+    print(f"Largest Change: {high_mon}:  (${high_chg})")
+    print(f"Smallest Change: {low_mon}:  (${low_chg})")
+    print(f"")
+    print(f"")
+    print(f"")
 
 ##################################################################################
 
-
-cand_list = []
-cand_votes = 0
+candlist = []
+votelist = []
 votecount = 0
-
 
 with open("election_data.csv") as file:
     pollreader = csv.DictReader(file)
@@ -57,9 +59,20 @@ with open("election_data.csv") as file:
 
     for row in pollreader:
         votecount +=1
-        if row['Candidate'] not in cand_list:
-            cand_list.append(row['Candidate'])
+        if row['Candidate'] not in candlist:
+            candlist.append(row['Candidate'])
+            votelist.append(0)
+        votelist[candlist.index(row['Candidate'])] +=1
+        #if votecount >= 100000: break
 
-
+    print(f"Election Results")
+    print(f"-----------------------------")
     print(f"total votes: {votecount}")
-    print(cand_list)
+    print(f"-----------------------------")
+    for i in range(0,len(candlist)):
+        print(f"{candlist[i]}:  {round(votelist[i]*100/votecount,3)}%   ({votelist[i]})")
+    mostvotes = max(votelist)
+    ind = votelist.index(mostvotes)
+    print(f"-----------------------------")
+    print(f"Winner: {candlist[ind]} with {votelist[ind]} votes")
+    print(f"-----------------------------")
