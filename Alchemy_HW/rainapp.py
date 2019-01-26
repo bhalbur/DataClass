@@ -17,6 +17,7 @@ Base.prepare(engine, reflect=True)
 Measurement = Base.classes.measurement
 Station = Base.classes.station
 
+
 session = Session(engine)
 
 
@@ -72,26 +73,17 @@ def tobs():
 
 @app.route("/api/v1.0/<start>")
 def startdate(start):
-    results = session.query(Measurement.date, Measurement.prcp).filter(Measurement.date >= start)
-    precip_list = []
-    for row in results:
-        precip_dict = {}
-        precip_dict["Date"] = row.date
-        precip_dict["Precipitation"] = row.prcp
-        precip_list.append(precip_dict)
-    return jsonify(precip_list)
+    mintemp = session.query(func.min(Measurement.tobs)).filter(Measurement.date >= start).scalar()
+    maxtemp = session.query(func.max(Measurement.tobs)).filter(Measurement.date >= start).scalar()
+    avetemp = session.query(func.avg(Measurement.tobs)).filter(Measurement.date >= start).scalar()
+    return f'The lowest temp since {start} was {mintemp}, while the highest temp was {maxtemp} and the average was {avetemp}'
 
 @app.route("/api/v1.0/<start>/<end>")
 def daterange(start, end):
-    results = session.query(Measurement.date, Measurement.prcp).filter(Measurement.date >= start, Measurement.date <= end)
-    precip_list = []
-    for row in results:
-        precip_dict = {}
-        precip_dict["Date"] = row.date
-        precip_dict["Precipitation"] = row.prcp
-        precip_list.append(precip_dict)
-    return jsonify(precip_list)
-
+    mintemp = session.query(func.min(Measurement.tobs)).filter(Measurement.date >= start, Measurement.date <= end).scalar()
+    maxtemp = session.query(func.max(Measurement.tobs)).filter(Measurement.date >= start, Measurement.date <= end).scalar()
+    avetemp = session.query(func.avg(Measurement.tobs)).filter(Measurement.date >= start, Measurement.date <= end).scalar()
+    return f'The lowest temp between {start} and {end} was {mintemp}, while the highest temp was {maxtemp} and the average was {avetemp}'
 
 
 if __name__ == '__main__':
