@@ -1,0 +1,29 @@
+.pad-l5 {
+	padding-left: 5%;
+}
+
+.margin-left {
+	margin-left: 10px;
+}
+
+.pad-1 {
+	padding: 1%;
+}
+.pad-5 {
+	padding: 5%;
+}
+
+.pad-10 {
+	padding: 10%;
+}
+
+.img-custom{
+	height: 150px;
+	width: 150px;
+	text-align: center;
+	margin: 10px;
+}
+
+.active-img{
+	border: 2px solid #5bc0de;
+}
