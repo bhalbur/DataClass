@@ -11,7 +11,10 @@ last_update = ''
 
 @app.route("/")
 def main():
+	last_update = datetime.datetime.now().strftime("%b %d, %Y at %H:%M")
 	news = mongo.db.variables.find({'type':'news'})[0]
+	##For some reason the featured image works on Jupyter but not 
+	##in the python when run from command line
 	#featured_image = mongo.db.variables.find({'type':'featured_image'})[0]
 	weather = mongo.db.variables.find({'type':'weather'})[0]
 	plain_facts = mongo.db.variables.find_one({'type':'facts'})['content']
@@ -38,7 +41,7 @@ def scrape():
 	#hemi()
 	last_update = datetime.datetime.now().strftime("%b %d, %Y at %H:%M")
 
-	return redirect("/test")
+	return redirect("/")
 
 
 
